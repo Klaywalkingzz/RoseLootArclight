@@ -1,0 +1,36 @@
+name: Build Maven JAR
+on:
+  push:
+    branches:
+      - master
+jobs:
+  maven:
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 7.4.2
+
+      - name: Execute Gradle build
+        run: gradle build
+
+      - name: Automatic Releases
+        uses: marvinpinto/action-automatic-releases@v1.2.1
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest-arclight"
+          prerelease: false
+          title: "Latest Release (arclight)"
+          files: |
+            build/libs/*.jar

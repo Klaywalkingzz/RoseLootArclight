@@ -37,13 +37,6 @@ public class HookConditionListener implements Listener {
             event.registerLootCondition("realisticseasons-event", RealisticSeasonsEventCondition::new);
         }
 
-        if (pluginManager.getPlugin("NBTAPI") != null) {
-            event.registerLootCondition("nbt-block", NBTBlockCondition::new);
-            event.registerLootCondition("nbt-entity", NBTEntityCondition::new);
-            event.registerLootCondition("nbt-item", NBTItemCondition::new);
-            event.registerLootCondition("nbt-looter", NBTLooterCondition::new);
-        }
-
         // Register conditions for custom item plugins
         for (CustomItemPlugin customItemPlugin : CustomItemPlugin.values())
             if (customItemPlugin.isEnabled() && customItemPlugin.supportsIdLookup())
