@@ -1,35 +1,34 @@
-plugins {
-    id "java"
-    id "com.github.johnrengelman.shadow" version "7.1.2"
-}
-
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
 }
 
 repositories {
-    // already there:
     mavenCentral()
 
-    // NEW – for MMOItems & MMOCore
-    maven { url "https://repo.lumine.io/repository/maven-public/" }
+    // ---- add these in EXACT order ----
+    // Spigot & Paper artifacts
+    maven { url "https://repo.papermc.io/repository/maven-public/" }
+    maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
 
-    // NEW – for Oraxen
+    // MMOItems / MMOCore
+    maven { url "https://mvn.lumine.io/repository/maven-public/" }   // ← FIXED (mvn.*, not repo.*)
+
+    // Oraxen
     maven { url "https://repo.oraxen.com/releases" }
 
-    // NEW – for ItemEdit & Slimefun (and any other GitHub jars)
+    // Everything else from GitHub tags
     maven { url "https://jitpack.io" }
 }
 
 dependencies {
+    // Core Bukkit API (needed!)
     compileOnly "org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT"
 
-    // ---- optional hooks ----
-    compileOnly "net.Indyuce:MMOItems:6.7.3"      // now resolves from Lumine
-    compileOnly "net.Indyuce:MMOCore:1.9.2"        // 1.9.3 → 1.9.2 (latest)
-    compileOnly "io.th0rgal:oraxen:1.181.0"        // any 1.xx from Oraxen repo
-    compileOnly "com.github.emanondev:ItemEdit:3.7.0"  // or a branch/commit hash
-    compileOnly "com.github.Slimefun:Slimefun4:RC-36"  // or master-SNAPSHOT
+    // ---- optional hooks (comment out if you don’t use them) ----
+    compileOnly "net.Indyuce:MMOItems:6.7.3"
+    compileOnly "net.Indyuce:MMOCore:1.9.2"
+    compileOnly "io.th0rgal:oraxen:1.181.0"
+    compileOnly "com.github.emanondev:ItemEdit:3.7.0"
+    compileOnly "com.github.Slimefun:Slimefun4:RC-36"
 }
-
