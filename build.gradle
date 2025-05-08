@@ -1,7 +1,8 @@
 plugins {
-    id 'java'                                   // ← THIS is what was missing
+    id 'java'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
+
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
@@ -9,30 +10,22 @@ java {
 
 repositories {
     mavenCentral()
+    maven { url "https://repo.papermc.io/repository/maven-public/" }   // Spigot snapshots
+    //  • You can delete every other repo line if you remove the hooks
+}
 
-    // ---- add these in EXACT order ----
-    // Spigot & Paper artifacts
-    maven { url "https://repo.papermc.io/repository/maven-public/" }
-    maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
-
-    // MMOItems / MMOCore
-    maven { url "https://mvn.lumine.io/repository/maven-public/" }   // ← FIXED (mvn.*, not repo.*)
-
-    // Oraxen
-    maven { url "https://repo.oraxen.com/releases" }
-
-    // Everything else from GitHub tags
-    maven { url "https://jitpack.io" }
+sourceSets {
+    main {
+        java {
+            //  ❯❯  EXCLUDE every hook package  ❮❮
+            exclude 'dev/rosewood/roseloot/hook/**'
+        }
+    }
 }
 
 dependencies {
-    // Core Bukkit API (needed!)
+    // Core Bukkit API – keep
     compileOnly "org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT"
 
-    // ---- optional hooks (comment out if you don’t use them) ----
-    compileOnly "net.Indyuce:MMOItems:6.7.3"
-    compileOnly "net.Indyuce:MMOCore:1.9.2"
-    compileOnly "io.th0rgal:oraxen:1.181.0"
-    compileOnly "com.github.emanondev:ItemEdit:3.7.0"
-    compileOnly "com.github.Slimefun:Slimefun4:RC-36"
+    //  ❯❯  DELETE or comment-out every compileOnly …MMOItems/MMOCore/Oraxen/ItemEdit/Slimefun line  ❮❮
 }
