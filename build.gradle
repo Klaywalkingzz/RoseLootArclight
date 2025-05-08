@@ -1,3 +1,7 @@
+plugins {
+    id 'java'                                   // ← THIS is what was missing
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
